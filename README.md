@@ -6,7 +6,8 @@ If neither machine answers, the TV shows YouTube's own Persian translation.
 
 - Designs: `docs/superpowers/specs/2026-10-12-persian-auto-translate-subtitles-design.md`, `docs/superpowers/specs/2026-10-12-ai-persian-subtitles-design.md`
 - Plans: `docs/superpowers/plans/2026-10-12-persian-auto-translate-subtitles.md`, `docs/superpowers/plans/2026-10-12-ai-persian-subtitles.md`
-- TV app source: `youtube-webos/` (branch `persian-ai-subtitles`)
+- TV app source: `youtube-webos/`, a git submodule pointing to [Ali-Flt/youtube-webos](https://github.com/Ali-Flt/youtube-webos), which is upstream plus the Persian changes.
+  Clone with `git clone --recurse-submodules https://github.com/Ali-Flt/yt_auto_sub.git`.
 - Server: `server/`
 
 ## How it works
@@ -139,11 +140,11 @@ If something fails, run `ares-inspect -d tv --app youtube.leanback.v4 --open` an
 ## Rebuild the TV app
 
 Updating the app from Homebrew Channel or another upstream build removes these changes.
-To rebuild on the laptop:
+To merge upstream changes and rebuild on the laptop, first add the upstream remote once with `git -C youtube-webos remote add upstream https://github.com/webosbrew/youtube-webos.git`, then:
 
 ```bash
 cd youtube-webos
-git fetch origin && git rebase origin/main
+git pull --no-rebase upstream main
 pnpm install
 pnpm run lint:all && pnpm run test:unit
 PERSIAN_SUBS_SERVERS="http://192.0.2.1:8765,http://$(hostname -I | awk '{print $1}'):8765" pnpm run build
@@ -152,6 +153,8 @@ node persian-subtitles.e2e.mjs && node ai-subtitles.e2e.mjs
 cd ../youtube-webos
 PERSIAN_SUBS_SERVERS="http://192.168.10.139:8765,http://192.168.10.245:8765" pnpm run build
 pnpm run test:compat && pnpm run package
+git push origin main
+cd .. && git add youtube-webos && git commit -m "chore: update youtube-webos" && git push
 ```
 
 The E2E build points at an unreachable address first and this laptop second, so the test covers failover.
