@@ -1,0 +1,707 @@
+{
+  "openPopupAction": {
+    "popupType": "DIALOG",
+    "popup": {
+      "overlaySectionRenderer": {
+        "overlay": {
+          "overlayTwoPanelRenderer": {
+            "actionPanel": {
+              "overlayPanelRenderer": {
+                "header": {
+                  "overlayPanelHeaderRenderer": {
+                    "title": {
+                      "simpleText": "Auto-translated captions"
+                    }
+                  }
+                },
+                "content": {
+                  "overlayPanelItemListRenderer": {
+                    "items": [
+                      {
+                        "overlayMessageRenderer": {
+                          "title": {
+                            "simpleText": ""
+                          },
+                          "subtitle": {
+                            "simpleText": "Recommended languages"
+                          },
+                          "style": "OVERLAY_MESSAGE_STYLE_SUBSECTION_TITLE"
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "English"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "en",
+                                      "languageName": "English",
+                                      "translationSourceTrackIndices": [
+                                        2
+                                      ]
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "overlayMessageRenderer": {
+                          "title": {
+                            "simpleText": ""
+                          },
+                          "subtitle": {
+                            "simpleText": "Other languages"
+                          },
+                          "style": "OVERLAY_MESSAGE_STYLE_SUBSECTION_TITLE"
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Arabic"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "ar",
+                                      "languageName": "Arabic"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Chinese (Traditional)"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "zh-Hant",
+                                      "languageName": "Chinese (Traditional)"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Dutch"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "nl",
+                                      "languageName": "Dutch"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "French"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "fr",
+                                      "languageName": "French"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "German"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "de",
+                                      "languageName": "German"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Hindi"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "hi",
+                                      "languageName": "Hindi"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Indonesian"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "id",
+                                      "languageName": "Indonesian"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Italian"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "it",
+                                      "languageName": "Italian"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Japanese"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "ja",
+                                      "languageName": "Japanese"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Korean"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "ko",
+                                      "languageName": "Korean"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Portuguese"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "pt",
+                                      "languageName": "Portuguese"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Russian"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "ru",
+                                      "languageName": "Russian"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Spanish"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "es",
+                                      "languageName": "Spanish"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Thai"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "th",
+                                      "languageName": "Thai"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Turkish"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "tr",
+                                      "languageName": "Turkish"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Ukrainian"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "uk",
+                                      "languageName": "Ukrainian"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Vietnamese"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "translationLanguage": {
+                                      "languageCode": "vi",
+                                      "languageName": "Vietnamese"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                },
+                                {
+                                  "signalAction": {
+                                    "signal": "POPUP_BACK"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      }
+                    ],
+                    "selectedIndex": 1
+                  }
+                }
+              }
+            },
+            "backButton": {
+              "buttonRenderer": {
+                "accessibilityData": {
+                  "accessibilityData": {
+                    "label": "Back"
+                  }
+                },
+                "command": {
+                  "signalAction": {
+                    "signal": "POPUP_BACK"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "dismissalCommand": {
+          "signalAction": {
+            "signal": "POPUP_BACK"
+          }
+        }
+      }
+    },
+    "uniqueId": "CLIENT_OVERLAY_TYPE_CAPTIONS_AUTO_TRANSLATE",
+    "updateAction": true
+  }
+}

@@ -1,0 +1,360 @@
+{
+  "openPopupAction": {
+    "popupType": "DIALOG",
+    "popup": {
+      "overlaySectionRenderer": {
+        "overlay": {
+          "overlayTwoPanelRenderer": {
+            "actionPanel": {
+              "overlayPanelRenderer": {
+                "header": {
+                  "overlayPanelHeaderRenderer": {
+                    "title": {
+                      "simpleText": "Subtitles/closed captions"
+                    }
+                  }
+                },
+                "content": {
+                  "overlayPanelItemListRenderer": {
+                    "items": [
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Caption style"
+                          },
+                          "subtitle": {
+                            "simpleText": "Change text, color, and background style"
+                          },
+                          "serviceEndpoint": {
+                            "openClientOverlayAction": {
+                              "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_STYLE"
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "CHEVRON_RIGHT"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Off"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {}
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "English"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "subtitlesTrackMetadata": {
+                                      "languageCode": "en",
+                                      "languageName": "English",
+                                      "displayName": "English",
+                                      "kind": "",
+                                      "name": "",
+                                      "id": null,
+                                      "is_servable": false,
+                                      "is_default": false,
+                                      "is_translateable": true,
+                                      "vss_id": ".en"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "CHECK"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "German (Germany)"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "subtitlesTrackMetadata": {
+                                      "languageCode": "de-DE",
+                                      "languageName": "German (Germany)",
+                                      "displayName": "German (Germany)",
+                                      "kind": "",
+                                      "name": "",
+                                      "id": null,
+                                      "is_servable": false,
+                                      "is_default": false,
+                                      "is_translateable": true,
+                                      "vss_id": ".de-DE"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Japanese"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "subtitlesTrackMetadata": {
+                                      "languageCode": "ja",
+                                      "languageName": "Japanese",
+                                      "displayName": "Japanese",
+                                      "kind": "",
+                                      "name": "",
+                                      "id": null,
+                                      "is_servable": false,
+                                      "is_default": false,
+                                      "is_translateable": true,
+                                      "vss_id": ".ja"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Portuguese (Brazil)"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "subtitlesTrackMetadata": {
+                                      "languageCode": "pt-BR",
+                                      "languageName": "Portuguese (Brazil)",
+                                      "displayName": "Portuguese (Brazil)",
+                                      "kind": "",
+                                      "name": "",
+                                      "id": null,
+                                      "is_servable": false,
+                                      "is_default": false,
+                                      "is_translateable": true,
+                                      "vss_id": ".pt-BR"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Spanish (Latin America)"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "subtitlesTrackMetadata": {
+                                      "languageCode": "es-419",
+                                      "languageName": "Spanish (Latin America)",
+                                      "displayName": "Spanish (Latin America)",
+                                      "kind": "",
+                                      "name": "",
+                                      "id": null,
+                                      "is_servable": false,
+                                      "is_default": false,
+                                      "is_translateable": true,
+                                      "vss_id": ".es-419"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "English (auto-generated)"
+                          },
+                          "serviceEndpoint": {
+                            "commandExecutorCommand": {
+                              "commands": [
+                                {
+                                  "selectSubtitlesTrackCommand": {
+                                    "subtitlesTrackMetadata": {
+                                      "languageCode": "en",
+                                      "languageName": "English (auto-generated)",
+                                      "displayName": "English (auto-generated)",
+                                      "kind": "asr",
+                                      "name": "",
+                                      "id": null,
+                                      "is_servable": false,
+                                      "is_default": false,
+                                      "is_translateable": true,
+                                      "vss_id": "a.en"
+                                    }
+                                  }
+                                },
+                                {
+                                  "openClientOverlayAction": {
+                                    "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+                                    "updateAction": true
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "RADIO_BUTTON_UNCHECKED"
+                          }
+                        }
+                      },
+                      {
+                        "compactLinkRenderer": {
+                          "title": {
+                            "simpleText": "Auto-translated"
+                          },
+                          "serviceEndpoint": {
+                            "openClientOverlayAction": {
+                              "type": "CLIENT_OVERLAY_TYPE_CAPTIONS_AUTO_TRANSLATE"
+                            }
+                          },
+                          "secondaryIcon": {
+                            "iconType": "CHEVRON_RIGHT"
+                          }
+                        }
+                      }
+                    ],
+                    "selectedIndex": 2
+                  }
+                }
+              }
+            },
+            "backButton": {
+              "buttonRenderer": {
+                "accessibilityData": {
+                  "accessibilityData": {
+                    "label": "Back"
+                  }
+                },
+                "command": {
+                  "signalAction": {
+                    "signal": "POPUP_BACK"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "dismissalCommand": {
+          "signalAction": {
+            "signal": "POPUP_BACK"
+          }
+        },
+        "onOpenCommand": {
+          "setClientSettingEndpoint": {
+            "settingDatas": [
+              {
+                "clientSettingEnum": {
+                  "item": "CAPTION_SHOW_SAMPLE_SUBTITLE"
+                }
+              }
+            ]
+          }
+        },
+        "onClosedCommand": {
+          "setClientSettingEndpoint": {
+            "settingDatas": [
+              {
+                "clientSettingEnum": {
+                  "item": "CAPTION_HIDE_SAMPLE_SUBTITLE"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "uniqueId": "CLIENT_OVERLAY_TYPE_CAPTIONS_LANGUAGE",
+    "updateAction": true
+  }
+}
