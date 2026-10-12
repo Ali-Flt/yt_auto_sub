@@ -20,7 +20,6 @@ When you pick Persian, the TV loads the translated subtitles from that machine a
 
 Each machine runs the same Docker setup from the `server/` folder.
 The folder is already at `~/persian-subs` on the PC.
-Copy it to the ThinkPad with `scp -r ~/persian-subs ali@192.168.10.245:`.
 
 ### PC on Linux (NVIDIA GPU)
 
@@ -57,6 +56,9 @@ Copy it to the ThinkPad with `scp -r ~/persian-subs ali@192.168.10.245:`.
 
 ### ThinkPad (CPU)
 
+The ThinkPad uses the PC's llama.cpp image; without an NVIDIA GPU it runs the model on the processor.
+Everything except the model is copied from the PC over the LAN, so nothing else is downloaded.
+
 1. Install Docker, then log out and back in:
 
    ```bash
@@ -65,14 +67,26 @@ Copy it to the ThinkPad with `scp -r ~/persian-subs ali@192.168.10.245:`.
    sudo usermod -aG docker "$USER"
    ```
 
-2. Start the server and check it:
+2. On the PC, copy the server folder and the Docker images to the ThinkPad:
+
+   ```bash
+   rsync -a --exclude cache --exclude models --exclude setup.log ~/persian-subs ali@192.168.10.245:
+   docker save ghcr.io/ggml-org/llama.cpp:server-cuda12-b11561 curlimages/curl:8.17.0 persian-subs-subs \
+     | zstd -T0 | ssh ali@192.168.10.245 'zstd -d | docker load'
+   ```
+
+3. If you downloaded `Hy-MT2-1.8B-Q4_K_M.gguf` yourself, move it to `~/persian-subs/models/` on the ThinkPad.
+   Otherwise the first start downloads it (1.1 GB).
+4. On the ThinkPad, start the server and check it:
 
    ```bash
    cd ~/persian-subs
    mkdir -p models cache
-   docker compose --env-file thinkpad.env up -d --build
+   docker compose --env-file thinkpad.env up -d
    python3 smoke.py
    ```
+
+   Leave out `--build`: the server image comes from the PC.
 
 ### PC on Windows
 
