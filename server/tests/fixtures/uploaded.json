@@ -1,0 +1,112 @@
+{
+ "events": [
+  {
+   "tStartMs": 120720,
+   "dDurationMs": 1500,
+   "segs": [
+    {
+     "utf8": "we wanted to run a test,"
+    }
+   ]
+  },
+  {
+   "tStartMs": 122220,
+   "dDurationMs": 2750,
+   "segs": [
+    {
+     "utf8": "but it turns out that getting\nthe sample isn't so easy."
+    }
+   ]
+  },
+  {
+   "tStartMs": 125970,
+   "dDurationMs": 1890,
+   "segs": [
+    {
+     "utf8": "All right, we've taken\na garden variety spider"
+    }
+   ]
+  },
+  {
+   "tStartMs": 127860,
+   "dDurationMs": 2220,
+   "segs": [
+    {
+     "utf8": "and knocked it unconscious using CO2."
+    }
+   ]
+  },
+  {
+   "tStartMs": 130080,
+   "dDurationMs": 2730,
+   "segs": [
+    {
+     "utf8": "We brought it over here and\nwe put it down with tape."
+    }
+   ]
+  },
+  {
+   "tStartMs": 132810,
+   "dDurationMs": 3030,
+   "segs": [
+    {
+     "utf8": "I then started pulling out\nthe dragline silk by hand."
+    }
+   ]
+  },
+  {
+   "tStartMs": 135840,
+   "dDurationMs": 1866,
+   "segs": [
+    {
+     "utf8": "It's so light that you can barely feel it."
+    }
+   ]
+  },
+  {
+   "tStartMs": 137706,
+   "dDurationMs": 2544,
+   "segs": [
+    {
+     "utf8": "We've attached it to this\nbig rotating mechanism"
+    }
+   ]
+  },
+  {
+   "tStartMs": 140250,
+   "dDurationMs": 2154,
+   "segs": [
+    {
+     "utf8": "which they custom made to milk spiders."
+    }
+   ]
+  },
+  {
+   "tStartMs": 142404,
+   "dDurationMs": 2583,
+   "segs": [
+    {
+     "utf8": "(bright music)"
+    }
+   ]
+  },
+  {
+   "tStartMs": 146820,
+   "dDurationMs": 2910,
+   "segs": [
+    {
+     "utf8": "No spiders were harmed in\nthe making of this video."
+    }
+   ]
+  },
+  {
+   "tStartMs": 149730,
+   "dDurationMs": 960,
+   "segs": [
+    {
+     "utf8": "Now that we've got our silk,"
+    }
+   ]
+  }
+ ]
+}

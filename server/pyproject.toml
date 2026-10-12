@@ -1,0 +1,13 @@
+[project]
+name = "persian-subs"
+version = "0.1.0"
+description = "LAN server that translates YouTube captions to Persian with a local model"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
