@@ -68,9 +68,15 @@ Copy it to the ThinkPad with `scp -r ~/persian-subs ali@192.168.10.245:`.
 
 1. Install [Docker Desktop](https://docs.docker.com/desktop/setup/install/windows-install/) with the WSL 2 backend, and a current NVIDIA driver.
    In Docker Desktop settings, turn on "Start Docker Desktop when you sign in", so the server comes back after a reboot.
-2. Copy the `server` folder to the Windows side, for example `D:\persian-subs`.
-3. To avoid downloading the model a second time, copy `Hy-MT2-7B-Q4_K_M.gguf` into `D:\persian-subs\models\`.
-4. In PowerShell, in that folder:
+2. While booted into Linux, copy the whole folder, including the downloaded model, to an NTFS drive that Windows also uses:
+
+   ```bash
+   cp -r ~/persian-subs /run/media/ali/LocalDisk/
+   ```
+
+   Linux keeps its own copy in `~/persian-subs`, because the NTFS drives are only mounted after you log in.
+3. Boot into Windows and open PowerShell in the `persian-subs` folder on the drive File Explorer labels "LocalDisk".
+4. Start the server:
 
    ```powershell
    docker compose --env-file pc.env -f docker-compose.yml -f gpu.yaml up -d --build
@@ -89,6 +95,7 @@ Copy it to the ThinkPad with `scp -r ~/persian-subs ali@192.168.10.245:`.
 - Logs: `docker compose --env-file pc.env logs -f subs` (use `thinkpad.env` on the ThinkPad).
 - Stop: `docker compose --env-file pc.env down`.
 - Change the model: edit `MODEL_URL`, `MODEL_FILE` and `PROMPT_STYLE` (`hy-mt` or `translategemma`) in the env file, then run the start command again.
+  Translations cached by the previous model are ignored and redone with the new one.
 - Translations are cached in `cache/`, so a rewatched video is instant.
 
 ## 2. Install the TV app
