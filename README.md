@@ -1,6 +1,6 @@
 # YouTube AdFree with Persian auto-translated subtitles
 
-A personal build of [webosbrew/youtube-webos](https://github.com/webosbrew/youtube-webos) that adds **Persian** to **CC → Auto-translate**.
+A personal build of [webosbrew/youtube-webos](https://github.com/webosbrew/youtube-webos) that adds **Persian** to **Settings → Captions → Auto-translated**.
 YouTube translates the captions itself; this build only adds the missing menu entry.
 
 - Design: `docs/superpowers/specs/2026-10-12-persian-auto-translate-subtitles-design.md`
@@ -38,7 +38,7 @@ After that, "Persian (Auto-translated)" also appears directly in the captions li
 - [ ] Ad blocking, SponsorBlock and the green-button settings still work.
 - [ ] Note whether Persian stays selected on the next video.
 
-If something fails, run `ares-inspect --app youtube.leanback.v4 --open` from the computer on the TV's network and look for `[persian-subtitles]` in the console.
+If something fails, run `ares-inspect -d <tv-device-name> --app youtube.leanback.v4 --open` from the computer on the TV's network and look for `[persian-subtitles]` in the console.
 
 ## Rebuild
 
@@ -50,7 +50,8 @@ cd youtube-webos
 git fetch origin && git rebase origin/main
 pnpm install
 pnpm run build && pnpm run lint:all && pnpm run test:compat && pnpm run test:unit
-cd ../e2e && node persian-subtitles.e2e.mjs
+cd ../e2e && npm install && npx playwright install chromium
+node persian-subtitles.e2e.mjs
 cd ../youtube-webos && pnpm run package
 ```
 

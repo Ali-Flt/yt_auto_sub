@@ -5,7 +5,7 @@
 
 ## Goal
 
-Make **Persian** selectable under **CC → Auto-translate** in the webosbrew `youtube-webos` app ("YouTube AdFree") on the user's LG TV.
+Make **Persian** selectable under **Settings → Captions → Auto-translated** in the webosbrew `youtube-webos` app ("YouTube AdFree") on the user's LG TV.
 Foreign-language videos (mostly English) can then show machine-translated Persian captions.
 
 ## Background (verified 2026-10-12)
@@ -33,7 +33,7 @@ Foreign-language videos (mostly English) can then show machine-translated Persia
 
 ## User experience
 
-1. The user plays a video and opens **CC → Auto-translate**.
+1. The user plays a video and opens **Settings → Captions → Auto-translated**.
 2. **Persian** is the first entry in the language list.
 3. Selecting it shows Persian captions, exactly like any other auto-translated language.
 4. Everything else in the app behaves as before.
@@ -106,11 +106,11 @@ All TV interaction is done manually by the user on their own LAN.
    - does not mutate its input.
 2. **Repo checks (laptop):** the repo's lint, typecheck and `test:compat` (`es-check` on `dist/`) pass.
 3. **Desktop E2E (laptop, Claude):** Chrome with a webOS TV user agent loads `youtube.com/tv`, with the built `userScript.js` injected at document start.
-   Play an English video with captions, open CC → Auto-translate, verify the Persian row, select it, verify Persian text in the caption window.
+   Play an English video with captions, open Settings → Captions → Auto-translated, verify the Persian row, select it, verify Persian text in the caption window.
    Screenshot the captions to check glyphs and right-to-left punctuation.
    If YouTube refuses to serve the TV UI to a desktop browser, record that and rely on the TV acceptance test.
 4. **TV acceptance (user, on the TV):**
-   - [ ] CC → Auto-translate lists Persian first.
+   - [ ] Settings → Captions → Auto-translated lists Persian first.
    - [ ] Selecting Persian shows Persian captions within about 10 seconds.
    - [ ] Persian-specific letters پ چ ژ گ ک ی render (no boxes).
    - [ ] Sentence-final punctuation sits on the left (correct RTL).
