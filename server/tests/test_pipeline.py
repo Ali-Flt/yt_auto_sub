@@ -135,3 +135,9 @@ def test_shape_cues_never_exceeds_two_lines_of_42_characters():
     assert all(len(pair[0]) <= (46 if len(pair) == 2 and pair[0][-1] in '،,.؛؟!:' else 42) for pair in cue_lines)
     assert ' '.join(lines) == text
     assert sum(c['dDurationMs'] for c in cues) == 10000
+
+
+def test_hy_mt_request_decodes_greedily():
+    _, body = build_request('hy-mt', 'It is not so easy.', [], '')
+
+    assert body['temperature'] == 0

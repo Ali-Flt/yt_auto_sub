@@ -133,9 +133,7 @@ def build_request(style, text, context, title):
             prompt = HY_MT_PLAIN.format(text=text)
         return '/v1/chat/completions', {
             'messages': [{'role': 'user', 'content': prompt}],
-            'temperature': 0.7,
-            'top_p': 0.6,
-            'top_k': 20,
+            'temperature': 0,
             'repeat_penalty': 1.05,
             'max_tokens': 512,
         }
