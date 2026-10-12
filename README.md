@@ -32,8 +32,8 @@ Copy it to the ThinkPad with `scp -r ~/persian-subs ali@192.168.10.245:`.
    sudo usermod -aG docker "$USER"
    ```
 
-2. If you already downloaded `Hy-MT2-7B-Q4_K_M.gguf`, move it to `~/persian-subs/models/` (create the folder first).
-   Otherwise the first start downloads it (4.6 GB).
+2. If you already downloaded `translategemma-12b-it-Q4_K_M.gguf`, move it to `~/persian-subs/models/` (create the folder first).
+   Otherwise the first start downloads it (7.3 GB).
 3. Start the server:
 
    ```bash
