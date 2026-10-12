@@ -98,7 +98,7 @@ Python 3.13, standard library only (`http.server.ThreadingHTTPServer`, `threadin
 |---|---|
 | `POST /v1/jobs` | `202 {status, done, total}`. Idempotent per video and source track (hash of the events); a known job only updates its priority position. |
 | `GET /v1/timedtext?v=&t=` | json3 `{wireMagic: "pb3", events: [...]}` with every cue translated so far; `t` updates the priority position. Unknown video: 404. |
-| `GET /v1/status?v=&t=` | `{status: queued, working, done or failed, done, total}`. |
+| `GET /v1/status?v=&t=` | `{status: working or done, done, total}`. |
 | `GET /healthz` | `200 {model}`. |
 | `OPTIONS *` | `204`. |
 
@@ -177,6 +177,7 @@ Written after every unit and loaded at startup, so a restart resumes and a rewat
 4. **PC integration:** the compose stack on the PC with the GPU and the chosen model; record time to translate a 10-minute video.
 5. **TV acceptance (user):**
    - [ ] Persian shows AI subtitles on a video with uploaded English captions and on one with only auto-generated captions.
+   - [ ] When the next video starts with Persian still selected, AI subtitles replace YouTube's within about 10 seconds.
    - [ ] With the PC off, subtitles come from the ThinkPad.
    - [ ] Lines keep appearing while a long video is still being translated.
    - [ ] Persian letters, half-spaces and punctuation render correctly.
