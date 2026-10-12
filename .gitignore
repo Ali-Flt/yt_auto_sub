@@ -1,1 +1,4 @@
 youtube-webos/
+e2e/node_modules/
+e2e/out/
+e2e/package-lock.json
