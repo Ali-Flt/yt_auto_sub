@@ -46,6 +46,13 @@ Copy it to the ThinkPad with `scp -r ~/persian-subs ali@192.168.10.245:`.
    If the image pull keeps failing on a flaky connection, run `./pull-image.sh ghcr.io/ggml-org/llama.cpp:server-cuda12-b11561` first (needs `aria2`).
    It resumes where it stopped, so run it again after any interruption.
 4. Check it: `python3 smoke.py` prints `translated 2 sentences` and two Persian lines.
+5. If `docker compose --env-file pc.env logs llm` says `failed to initialize CUDA: unknown error`, Docker's list of NVIDIA devices is out of date (this happens after kernel or driver updates).
+   Regenerate it and restart the model server:
+
+   ```bash
+   sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
+   docker compose --env-file pc.env -f docker-compose.yml -f gpu.yaml up -d --force-recreate llm
+   ```
 
 ### ThinkPad (CPU)
 
