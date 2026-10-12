@@ -175,3 +175,14 @@ def test_worker_survives_unexpected_errors(tmp_path):
 
     with store.changed:
         assert store.changed.wait_for(lambda: job.status == 'done', timeout=5)
+
+
+def test_cache_from_another_model_is_ignored(tmp_path):
+    old = Store(tmp_path, 'old-model')
+    submit(old)
+    old.record(old.jobs['aaaaaaaaaaa'], 0, 'ترجمه قدیمی')
+
+    new = Store(tmp_path, 'new-model')
+
+    assert new.jobs == {}
+    assert submit(new) == {'status': 'working', 'done': 0, 'total': 9}

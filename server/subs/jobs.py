@@ -89,7 +89,8 @@ class Store:
             if name.endswith('.json'):
                 with open(os.path.join(cache_dir, name), encoding='utf-8') as f:
                     job = Job.from_dict(json.load(f))
-                self.jobs[job.video_id] = job
+                if job.model == model:
+                    self.jobs[job.video_id] = job
 
     def submit(self, video_id, title, asr, events, position_ms):
         source = hashlib.sha256(json.dumps(events, sort_keys=True).encode()).hexdigest()[:16]
