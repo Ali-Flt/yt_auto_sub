@@ -1,3 +1,4 @@
+import http.client
 import io
 import json
 import threading
@@ -147,3 +148,30 @@ def test_worker_translates_every_unit(tmp_path):
         assert store.changed.wait_for(lambda: job.status == 'done', timeout=5)
 
     assert job.fa[0].startswith('fa:we wanted')
+
+
+def test_translate_unit_counts_dropped_connections_as_failures():
+    answers = [http.client.RemoteDisconnected('closed'), http.client.IncompleteRead(b'')]
+
+    def dropping(*args):
+        raise answers.pop(0)
+
+    assert translate_unit(dropping, 'Hi', [], '', log=lambda m: None) == 'Hi'
+
+
+def test_worker_survives_unexpected_errors(tmp_path):
+    store = Store(tmp_path, 'test-model')
+    submit(store)
+    job = store.jobs['aaaaaaaaaaa']
+    calls = []
+
+    def flaky(text, context, title):
+        calls.append(text)
+        if len(calls) == 1:
+            raise RuntimeError('boom')
+        return f'fa:{text}'
+
+    threading.Thread(target=work_forever, args=(store, flaky), kwargs={'log': lambda m: None, 'wait_s': 0}, daemon=True).start()
+
+    with store.changed:
+        assert store.changed.wait_for(lambda: job.status == 'done', timeout=5)

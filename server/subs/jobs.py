@@ -1,6 +1,7 @@
 """Per-video translation jobs: JSON cache, priority order, LLM client and worker loop."""
 
 import hashlib
+import http.client
 import json
 import os
 import threading
@@ -178,7 +179,7 @@ def translate_unit(translate, text, context, title, log=print, wait_s=5.0):
                 time.sleep(wait_s)
                 continue
             problem = error
-        except (TimeoutError, ValueError, KeyError, IndexError) as error:
+        except (TimeoutError, ConnectionError, http.client.HTTPException, ValueError, KeyError, IndexError) as error:
             problem = error
         else:
             if result:
@@ -190,7 +191,11 @@ def translate_unit(translate, text, context, title, log=print, wait_s=5.0):
             return text
 
 
-def work_forever(store, translate, log=print):
+def work_forever(store, translate, log=print, wait_s=5.0):
     while True:
-        job, index, text, context = store.next_work()
-        store.record(job, index, translate_unit(translate, text, context, job.title, log))
+        try:
+            job, index, text, context = store.next_work()
+            store.record(job, index, translate_unit(translate, text, context, job.title, log, wait_s))
+        except Exception as error:
+            log(f'worker error, retrying: {error!r}')
+            time.sleep(wait_s)
