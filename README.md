@@ -1,58 +1,142 @@
-# YouTube AdFree with Persian auto-translated subtitles
+# YouTube AdFree with AI Persian subtitles
 
-A personal build of [webosbrew/youtube-webos](https://github.com/webosbrew/youtube-webos) that adds **Persian** to **Settings → Captions → Auto-translated**.
-YouTube translates the captions itself; this build only adds the missing menu entry.
+A personal build of [webosbrew/youtube-webos](https://github.com/webosbrew/youtube-webos) plus a small home server.
+Pick **Persian** under **Settings → Captions → Auto-translated**, and the TV shows Persian subtitles translated by a local AI model on the PC, or on the ThinkPad when the PC is off.
+If neither machine answers, the TV shows YouTube's own Persian translation.
 
-- Design: `docs/superpowers/specs/2026-10-12-persian-auto-translate-subtitles-design.md`
-- Plan: `docs/superpowers/plans/2026-10-12-persian-auto-translate-subtitles.md`
-- Source: `youtube-webos/` (branch `persian-subtitles`)
+- Designs: `docs/superpowers/specs/2026-10-12-persian-auto-translate-subtitles-design.md`, `docs/superpowers/specs/2026-10-12-ai-persian-subtitles-design.md`
+- Plans: `docs/superpowers/plans/2026-10-12-persian-auto-translate-subtitles.md`, `docs/superpowers/plans/2026-10-12-ai-persian-subtitles.md`
+- TV app source: `youtube-webos/` (branch `persian-ai-subtitles`)
+- Server: `server/`
 
-## Install on the TV
+## How it works
+
+When a video starts, the TV app sends the video's English captions to the PC (`192.168.10.139`), or to the ThinkPad (`192.168.10.245`) if the PC does not answer within 3 seconds.
+That machine translates them sentence by sentence with a local model, starting at the point you are watching.
+When you pick Persian, the TV loads the translated subtitles from that machine and refreshes them every 10 seconds until the whole video is done.
+
+## 1. Install the server
+
+Each machine runs the same Docker setup from the `server/` folder.
+The folder is already at `~/persian-subs` on the PC.
+Copy it to the ThinkPad with `scp -r ~/persian-subs ali@192.168.10.245:`.
+
+### PC on Linux (NVIDIA GPU)
+
+1. Install Docker and the NVIDIA Container Toolkit, then log out and back in:
+
+   ```bash
+   sudo pacman -S docker docker-compose nvidia-container-toolkit
+   sudo nvidia-ctk runtime configure --runtime=docker
+   sudo systemctl enable --now docker
+   sudo usermod -aG docker "$USER"
+   ```
+
+2. If you already downloaded `Hy-MT2-7B-Q4_K_M.gguf`, move it to `~/persian-subs/models/` (create the folder first).
+   Otherwise the first start downloads it (4.6 GB).
+3. Start the server:
+
+   ```bash
+   cd ~/persian-subs
+   mkdir -p models cache
+   docker compose --env-file pc.env -f docker-compose.yml -f gpu.yaml up -d --build
+   ```
+
+   `docker compose --env-file pc.env logs -f model llm` shows the download and the model loading.
+4. Check it: `python3 smoke.py` prints `translated 2 sentences` and two Persian lines.
+
+### ThinkPad (CPU)
+
+1. Install Docker, then log out and back in:
+
+   ```bash
+   sudo pacman -S docker docker-compose
+   sudo systemctl enable --now docker
+   sudo usermod -aG docker "$USER"
+   ```
+
+2. Start the server and check it:
+
+   ```bash
+   cd ~/persian-subs
+   mkdir -p models cache
+   docker compose --env-file thinkpad.env up -d --build
+   python3 smoke.py
+   ```
+
+### PC on Windows
+
+1. Install [Docker Desktop](https://docs.docker.com/desktop/setup/install/windows-install/) with the WSL 2 backend, and a current NVIDIA driver.
+   In Docker Desktop settings, turn on "Start Docker Desktop when you sign in", so the server comes back after a reboot.
+2. Copy the `server` folder to the Windows side, for example `D:\persian-subs`.
+3. To avoid downloading the model a second time, copy `Hy-MT2-7B-Q4_K_M.gguf` into `D:\persian-subs\models\`.
+4. In PowerShell, in that folder:
+
+   ```powershell
+   docker compose --env-file pc.env -f docker-compose.yml -f gpu.yaml up -d --build
+   ```
+
+5. Allow the TV to connect, in an administrator PowerShell:
+
+   ```powershell
+   New-NetFirewallRule -DisplayName "persian-subs" -Direction Inbound -Protocol TCP -LocalPort 8765 -Action Allow
+   ```
+
+6. Check it from the ThinkPad: `python3 ~/persian-subs/smoke.py http://192.168.10.139:8765`.
+
+### Day to day
+
+- Logs: `docker compose --env-file pc.env logs -f subs` (use `thinkpad.env` on the ThinkPad).
+- Stop: `docker compose --env-file pc.env down`.
+- Change the model: edit `MODEL_URL`, `MODEL_FILE` and `PROMPT_STYLE` (`hy-mt` or `translategemma`) in the env file, then run the start command again.
+- Translations are cached in `cache/`, so a rewatched video is instant.
+
+## 2. Install the TV app
 
 The TV must be in Developer Mode with an active session.
 
-1. On a computer on the same network as the TV, copy the package from the laptop:
-
-   ```bash
-   scp <laptop>:/home/ali/Documents/ali/yt_auto_sub/youtube-webos/youtube.leanback.v4_0.5.3_all.ipk .
-   ```
-
-2. Install it the same way you installed YouTube AdFree:
-   - **webOS Dev Manager:** Apps → Install → choose `youtube.leanback.v4_0.5.3_all.ipk`.
-   - **CLI:** `ares-install -d <tv-device-name> youtube.leanback.v4_0.5.3_all.ipk`
-
+1. The package is on the PC at `~/youtube.leanback.v4_0.5.3_all.ipk`.
+2. Install it from the PC: `ares-install -d tv ~/youtube.leanback.v4_0.5.3_all.ipk`, or use webOS Dev Manager (Apps → Install).
    The app ID is unchanged, so this replaces the existing YouTube AdFree.
+
+The server addresses are built into the package.
+If an address changes, rebuild the package (see below).
 
 ## Use it
 
 Play a video, open **Settings → Captions → Auto-translated**, and pick **Persian**.
-After that, "Persian (Auto-translated)" also appears directly in the captions list.
+Subtitles start where you are watching; lines that are not translated yet appear within about 10 seconds of being ready.
 
 ## Check on the TV
 
-- [ ] Auto-translated lists Persian first.
-- [ ] Selecting Persian shows Persian captions within about 10 seconds.
-- [ ] Letters پ چ ژ گ ک ی render (no boxes).
-- [ ] Sentence-final punctuation sits on the left.
-- [ ] Other auto-translated languages and normal captions still work.
-- [ ] Ad blocking, SponsorBlock and the green-button settings still work.
-- [ ] Note whether Persian stays selected on the next video.
+- [ ] A video with uploaded English captions shows AI Persian subtitles: full sentences, at most two lines.
+- [ ] A video with only auto-generated captions does the same.
+- [ ] When the next video starts with Persian still selected, AI subtitles appear within about 10 seconds.
+- [ ] With the PC off, subtitles still come (from the ThinkPad).
+- [ ] With both machines off, Persian shows YouTube's own translation.
+- [ ] A long video keeps getting new lines while you watch.
+- [ ] Letters پ چ ژ گ ک ی, half-spaces and punctuation render correctly.
+- [ ] Other captions, ad blocking, SponsorBlock and the green-button settings still work.
 
-If something fails, run `ares-inspect -d <tv-device-name> --app youtube.leanback.v4 --open` from the computer on the TV's network and look for `[persian-subtitles]` in the console.
+If something fails, run `ares-inspect -d tv --app youtube.leanback.v4 --open` and look for `[persian-ai]` in the console, and check `docker compose logs subs` on the server.
 
-## Rebuild
+## Rebuild the TV app
 
-Updating the app from Homebrew Channel or another upstream build removes Persian.
+Updating the app from Homebrew Channel or another upstream build removes these changes.
 To rebuild on the laptop:
 
 ```bash
 cd youtube-webos
 git fetch origin && git rebase origin/main
 pnpm install
-pnpm run build && pnpm run lint:all && pnpm run test:compat && pnpm run test:unit
+pnpm run lint:all && pnpm run test:unit
+PERSIAN_SUBS_SERVERS="http://192.0.2.1:8765,http://$(hostname -I | awk '{print $1}'):8765" pnpm run build
 cd ../e2e && npm install && npx playwright install chromium
-node persian-subtitles.e2e.mjs
-cd ../youtube-webos && pnpm run package
+node persian-subtitles.e2e.mjs && node ai-subtitles.e2e.mjs
+cd ../youtube-webos
+PERSIAN_SUBS_SERVERS="http://192.168.10.139:8765,http://192.168.10.245:8765" pnpm run build
+pnpm run test:compat && pnpm run package
 ```
 
-Then install the new `.ipk` as above.
+The E2E build points at an unreachable address first and this laptop second, so the test covers failover.
+Server tests: `cd server && uv run --python 3.13 pytest`.
