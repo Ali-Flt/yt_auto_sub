@@ -2,6 +2,7 @@
 # docker pull that survives a flaky connection: blobs resume where they stopped, and a re-run picks up again.
 # Usage: ./pull-image.sh ghcr.io/ggml-org/llama.cpp:server-cuda12-b11561
 set -euo pipefail
+trap 'exit 130' INT TERM
 
 ref=${1:?usage: $0 registry/repo:tag}
 name=${ref%:*} tag=${ref##*:}
@@ -39,16 +40,19 @@ for blob in "${blobs[@]}"; do
   file=$dir/${digest#sha256:}
   [[ -f $file ]] || echo "$digest ($((size / 1048576)) MB)"
   until [[ -f $file ]]; do
-    while (($(stat -c %s "$file.part" 2>/dev/null || echo 0) < size)); do
-      curl -fL -C - --connect-timeout 20 --speed-limit 1024 --speed-time 60 -o "$file.part" \
-        -H "Authorization: Bearer $(token)" "https://$registry/v2/$repo/blobs/$digest" ||
-        { echo "interrupted, resuming in 5 s"; sleep 5; }
-    done
-    if sha256sum -c --status <<<"${digest#sha256:}  $file.part"; then
+    # Signed download URLs expire after a few minutes, so each attempt fetches a fresh one.
+    url=$(curl -sS --connect-timeout 20 -o /dev/null -w '%{redirect_url}' \
+      -H "Authorization: Bearer $(token)" "https://$registry/v2/$repo/blobs/$digest") || true
+    if [[ -z $url ]] || ! aria2c -c -x16 -s16 -k1M --file-allocation=none --timeout=30 --lowest-speed-limit=1K \
+      --max-tries=3 --retry-wait=5 --summary-interval=0 --console-log-level=warn \
+      -d "$dir" -o "${digest#sha256:}.part" "$url"; then
+      echo "interrupted, resuming in 5 s"
+      sleep 5
+    elif sha256sum -c --status <<<"${digest#sha256:}  $file.part"; then
       mv "$file.part" "$file"
     else
       echo "checksum mismatch, downloading $digest again"
-      rm "$file.part"
+      rm -f "$file.part" "$file.part.aria2"
     fi
   done
 done

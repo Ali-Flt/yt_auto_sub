@@ -43,7 +43,7 @@ Copy it to the ThinkPad with `scp -r ~/persian-subs ali@192.168.10.245:`.
    ```
 
    `docker compose --env-file pc.env logs -f model llm` shows the download and the model loading.
-   If the image pull keeps failing on a flaky connection, run `./pull-image.sh ghcr.io/ggml-org/llama.cpp:server-cuda12-b11561` first.
+   If the image pull keeps failing on a flaky connection, run `./pull-image.sh ghcr.io/ggml-org/llama.cpp:server-cuda12-b11561` first (needs `aria2`).
    It resumes where it stopped, so run it again after any interruption.
 4. Check it: `python3 smoke.py` prints `translated 2 sentences` and two Persian lines.
 
