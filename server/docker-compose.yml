@@ -1,0 +1,43 @@
+name: persian-subs
+
+services:
+  model:
+    image: curlimages/curl:8.17.0
+    user: "${UID:-1000}:${GID:-1000}"
+    environment:
+      MODEL_URL: ${MODEL_URL:?set MODEL_URL in the env file}
+      MODEL_FILE: ${MODEL_FILE:?set MODEL_FILE in the env file}
+    volumes:
+      - ${MODELS_DIR:-./models}:/models
+    entrypoint:
+      - sh
+      - -c
+      - >-
+        if [ -s "/models/$$MODEL_FILE" ]; then echo "model present: $$MODEL_FILE"; exit 0; fi;
+        curl -fL --retry 5 -C - -o "/models/$$MODEL_FILE.part" "$$MODEL_URL"
+        && mv "/models/$$MODEL_FILE.part" "/models/$$MODEL_FILE"
+
+  llm:
+    image: ${LLM_IMAGE:?set LLM_IMAGE in the env file}
+    depends_on:
+      model:
+        condition: service_completed_successfully
+    volumes:
+      - ${MODELS_DIR:-./models}:/models:ro
+    command: -m /models/${MODEL_FILE} --host 0.0.0.0 --port 8080 -c 4096 ${LLM_ARGS:-}
+    restart: unless-stopped
+
+  subs:
+    build: .
+    depends_on:
+      - llm
+    user: "${UID:-1000}:${GID:-1000}"
+    environment:
+      LLM_URL: http://llm:8080
+      PROMPT_STYLE: ${PROMPT_STYLE:-hy-mt}
+      MODEL_NAME: ${MODEL_FILE}
+    volumes:
+      - ${CACHE_DIR:-./cache}:/cache
+    ports:
+      - "8765:8765"
+    restart: unless-stopped
