@@ -118,3 +118,20 @@ def test_shape_cues_marks_speaker_change():
     cues = shape_cues('آره.', 0, 1000, speaker_change=True)
 
     assert cues == [{'tStartMs': 0, 'dDurationMs': 1000, 'segs': [{'utf8': '- آره.'}]}]
+
+
+def test_shape_cues_never_exceeds_two_lines_of_42_characters():
+    text = (
+        'و این بدان معناست که با توجه به جرم و طول یکسان، تار عنکبوت\u200cها می\u200cتوانند تقریباً دو برابر '
+        'نیروی مورد نیاز برای شکستن فولاد فوق\u200cالعاده مقاوم را تحمل کنند.'
+    )
+
+    cues = shape_cues(text, 0, 10000, speaker_change=False)
+
+    cue_lines = [c['segs'][0]['utf8'].split('\n') for c in cues]
+    lines = [line for pair in cue_lines for line in pair]
+    assert all(len(pair) <= 2 for pair in cue_lines)
+    assert all(len(pair[-1]) <= 42 for pair in cue_lines)
+    assert all(len(pair[0]) <= (46 if len(pair) == 2 and pair[0][-1] in '،,.؛؟!:' else 42) for pair in cue_lines)
+    assert ' '.join(lines) == text
+    assert sum(c['dDurationMs'] for c in cues) == 10000

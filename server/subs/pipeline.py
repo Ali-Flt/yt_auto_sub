@@ -11,6 +11,7 @@ MERGE_MAX_WORDS = 20
 MERGE_MAX_MS = 7_000
 LINE_CHARS = 42
 CUE_CHARS = 2 * LINE_CHARS
+PUNCT_SLACK = 4
 
 SENTENCE_END = re.compile(r'[.?!…]["\')\]]*$')
 SOUND_TAG = re.compile(r'[(\[][^)\]]*[)\]]')
@@ -167,7 +168,7 @@ def wrap(text):
     best = None
     for i in range(1, len(words)):
         first, second = ' '.join(words[:i]), ' '.join(words[i:])
-        score = max(len(first), len(second)) - (4 if BREAK_AFTER.search(words[i - 1]) else 0)
+        score = max(len(first), len(second)) - (PUNCT_SLACK if BREAK_AFTER.search(words[i - 1]) else 0)
         if best is None or score < best[0]:
             best = (score, [first, second])
     return best[1] if best else [text]
@@ -190,9 +191,24 @@ def _split(text):
     return parts
 
 
+def _fits(lines):
+    """Lines of LINE_CHARS; a break right after punctuation may run PUNCT_SLACK longer."""
+    limit = LINE_CHARS + PUNCT_SLACK if len(lines) == 2 and BREAK_AFTER.search(lines[0]) else LINE_CHARS
+    return max(len(line) for line in lines) <= limit
+
+
+def _fit(part):
+    """Split a cue text further, at its most balanced point, until it wraps into lines that fit."""
+    words = part.split(' ')
+    if len(words) < 2 or _fits(wrap(part)):
+        return [part]
+    cut = min(range(1, len(words)), key=lambda i: max(len(' '.join(words[:i])), len(' '.join(words[i:]))))
+    return _fit(' '.join(words[:cut])) + _fit(' '.join(words[cut:]))
+
+
 def shape_cues(text, start, end, speaker_change):
     """json3 events for one translated unit: at most two lines per cue, time split by length."""
-    parts = _split(('- ' if speaker_change else '') + text)
+    parts = [piece for part in _split(('- ' if speaker_change else '') + text) for piece in _fit(part)]
     total = sum(len(p) for p in parts) or 1
     cues, t = [], float(start)
     for part in parts:
