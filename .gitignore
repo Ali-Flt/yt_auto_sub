@@ -3,6 +3,7 @@ e2e/out/
 e2e/package-lock.json
 server/models/
 server/cache/
+server/.env
 server/.venv/
 __pycache__/
 .pytest_cache/

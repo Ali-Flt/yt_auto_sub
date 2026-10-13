@@ -39,19 +39,21 @@ The folder is already at `~/persian-subs` on the PC.
    ```bash
    cd ~/persian-subs
    mkdir -p models cache
-   docker compose --env-file pc.env -f docker-compose.yml -f gpu.yaml up -d --build
+   ln -sf pc.env .env
+   docker compose up -d --build
    ```
 
-   `docker compose --env-file pc.env logs -f model llm` shows the download and the model loading.
+   `.env` makes every `docker compose` command in this folder use `pc.env` and the GPU.
+   `docker compose logs -f model llm` shows the download and the model loading.
    If the image pull keeps failing on a flaky connection, run `./pull-image.sh ghcr.io/ggml-org/llama.cpp:server-cuda12-b11561` first (needs `aria2`).
    It resumes where it stopped, so run it again after any interruption.
 4. Check it: `python3 smoke.py` prints `translated 2 sentences` and two Persian lines.
-5. If `docker compose --env-file pc.env logs llm` says `failed to initialize CUDA: unknown error`, Docker's list of NVIDIA devices is out of date (this happens after kernel or driver updates).
+5. If `docker compose logs llm` says `failed to initialize CUDA: unknown error`, Docker's list of NVIDIA devices is out of date (this happens after kernel or driver updates).
    Regenerate it and restart the model server:
 
    ```bash
    sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
-   docker compose --env-file pc.env -f docker-compose.yml -f gpu.yaml up -d --force-recreate llm
+   docker compose up -d --force-recreate llm
    ```
 
 ### ThinkPad (CPU)
@@ -70,7 +72,7 @@ Everything except the model is copied from the PC over the LAN, so nothing else 
 2. On the PC, copy the server folder and the Docker images to the ThinkPad:
 
    ```bash
-   rsync -a --exclude cache --exclude models --exclude setup.log ~/persian-subs ali@192.168.10.245:
+   rsync -a --exclude cache --exclude models --exclude setup.log --exclude .env ~/persian-subs ali@192.168.10.245:
    docker save ghcr.io/ggml-org/llama.cpp:server-cuda12-b11561 curlimages/curl:8.17.0 persian-subs-subs \
      | zstd -T0 | ssh ali@192.168.10.245 'zstd -d | docker load'
    ```
@@ -82,7 +84,8 @@ Everything except the model is copied from the PC over the LAN, so nothing else 
    ```bash
    cd ~/persian-subs
    mkdir -p models cache
-   docker compose --env-file thinkpad.env up -d
+   ln -sf thinkpad.env .env
+   docker compose up -d
    python3 smoke.py
    ```
 
@@ -95,15 +98,17 @@ Everything except the model is copied from the PC over the LAN, so nothing else 
 2. While booted into Linux, copy the whole folder, including the downloaded model, to an NTFS drive that Windows also uses:
 
    ```bash
-   cp -r ~/persian-subs /run/media/ali/LocalDisk/
+   cp -rL ~/persian-subs /run/media/ali/LocalDisk/
    ```
+
+   `-L` copies `.env` as a plain file, because Windows cannot follow the Linux link.
 
    Linux keeps its own copy in `~/persian-subs`, because the NTFS drives are only mounted after you log in.
 3. Boot into Windows and open PowerShell in the `persian-subs` folder on the drive File Explorer labels "LocalDisk".
 4. Start the server:
 
    ```powershell
-   docker compose --env-file pc.env -f docker-compose.yml -f gpu.yaml up -d --build
+   docker compose up -d --build
    ```
 
 5. Allow the TV to connect, in an administrator PowerShell:
@@ -116,8 +121,8 @@ Everything except the model is copied from the PC over the LAN, so nothing else 
 
 ### Day to day
 
-- Logs: `docker compose --env-file pc.env logs -f subs` (use `thinkpad.env` on the ThinkPad).
-- Stop: `docker compose --env-file pc.env down`.
+- Logs: `docker compose logs -f subs`.
+- Stop: `docker compose down`.
 - Change the model: edit `MODEL_URL`, `MODEL_FILE` and `PROMPT_STYLE` (`hy-mt` or `translategemma`) in the env file, then run the start command again.
   Translations cached by the previous model are ignored and redone with the new one.
 - Translations are cached in `cache/`, so a rewatched video is instant.
