@@ -41,3 +41,10 @@ services:
     ports:
       - "8765:8765"
     restart: unless-stopped
+
+networks:
+  default:
+    # Fixed, outside Docker's automatic 172.17-31 range: v2rayN's TUN takes 172.18.0.0/30 and hides the containers.
+    ipam:
+      config:
+        - subnet: 172.16.231.0/24
