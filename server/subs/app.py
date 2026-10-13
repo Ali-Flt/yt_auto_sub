@@ -34,7 +34,7 @@ def _valid_events(events):
 def parse_job(payload):
     """Validate a POST /v1/jobs body; return Store.submit keyword arguments or raise ValueError."""
     if not isinstance(payload, dict):
-        raise ValueError('body must be a JSON object')
+        raise ValueError('body must be a JSON object')  # noqa: TRY004 - the handler answers ValueError with 400
     video_id = payload.get('videoId')
     if not isinstance(video_id, str) or not VIDEO_ID.match(video_id):
         raise ValueError('videoId must be an 11-character YouTube id')

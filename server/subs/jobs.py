@@ -10,7 +10,15 @@ import urllib.error
 import urllib.request
 from dataclasses import asdict
 
-from .pipeline import PROMPT_STYLES, Unit, build_request, build_units, normalize, parse_response, shape_cues
+from .pipeline import (
+    PROMPT_STYLES,
+    Unit,
+    build_request,
+    build_units,
+    normalize,
+    parse_response,
+    shape_cues,
+)
 
 CONTEXT_UNITS = 3
 LLM_TIMEOUT_S = 120
@@ -197,6 +205,6 @@ def work_forever(store, translate, log=print, wait_s=5.0):
         try:
             job, index, text, context = store.next_work()
             store.record(job, index, translate_unit(translate, text, context, job.title, log, wait_s))
-        except Exception as error:
+        except Exception as error:  # noqa: BLE001 - the worker must outlive any bad job
             log(f'worker error, retrying: {error!r}')
             time.sleep(wait_s)
