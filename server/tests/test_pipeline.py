@@ -75,6 +75,7 @@ def test_translategemma_request_uses_raw_template():
     assert path == '/completion'
     assert body['prompt'].endswith('\n\n\nIt helps.<end_of_turn>\n<start_of_turn>model\n')
     assert 'ignored' not in body['prompt']
+    assert 'spoken Persian (محاوره‌ای)' in body['prompt']
 
 
 def test_unknown_prompt_style_is_rejected():

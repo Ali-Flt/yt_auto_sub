@@ -1,5 +1,6 @@
 """English caption events -> sentence units -> model prompts -> Persian subtitle cues."""
 
+import itertools
 import math
 import re
 from dataclasses import dataclass
@@ -27,11 +28,10 @@ HY_MT_CONTEXT = (
     'information into consideration.\n\n[Source Text]\n{text}'
 )
 TRANSLATEGEMMA = (
-    '<start_of_turn>user\nYou are a professional English (en) to Persian (fa) translator. '
-    'Your goal is to accurately convey the meaning and nuances of the original English text '
-    'while adhering to Persian grammar, vocabulary, and cultural sensitivities.\n'
-    'Produce only the Persian translation, without any additional explanations or commentary. '
-    'Please translate the following English text into Persian:\n\n\n{text}<end_of_turn>\n'
+    '<start_of_turn>user\nYou are a professional English (en) to Persian (fa) subtitle translator. '
+    'Translate the spoken English line below into natural, everyday spoken Persian (محاوره‌ای), the way a good '
+    'Persian subtitle would say it: convey the meaning, not word for word; drop fillers, false starts and repeated '
+    'words; keep it short. Produce only the Persian translation.\n\n\n{text}<end_of_turn>\n'
     '<start_of_turn>model\n'
 )
 PROMPT_STYLES = ('hy-mt', 'translategemma')
@@ -69,7 +69,7 @@ def _word_pieces(events):
             word = seg.get('utf8', '').strip()
             if word:
                 words.append([event['tStartMs'] + seg.get('tOffsetMs', 0), end, word])
-    for word, following in zip(words, words[1:]):
+    for word, following in itertools.pairwise(words):
         if following[0] > word[0]:
             word[1] = min(word[1], following[0])
     change = False
